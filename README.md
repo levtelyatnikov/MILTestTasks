@@ -1,6 +1,6 @@
 # MILTestTasks
 ## Add noise
-To add the noise in any audio dataset it all what you is to prepare the folder with the .flac files.
+To add the noise in any audio dataset you need to prepare the folder with the .flac files.
 In my case the dataset with the audio was pretty large so i decided to take random sample of the audios from all dataset of the audios.
 
 #### To add noise write in terminal:
@@ -8,20 +8,20 @@ In my case the dataset with the audio was pretty large so i decided to take rand
 
 \<path in\> - path to the directory which contains audio files (the directory can contain other directories which will lead to the audio files)
 \<subsample\> - the proportion of the files which will be randomly selected from the initial dataset.
-####The output (will be created at current working directory):
+#### The output (will be created at current working directory):
  - The directory "NoisyData/" with the noisy audio files.
- - The file "audio_path.txt" which will contain all paths to all audio files which were selected from initial dataset.
+ - The file "audio_paths.txt" which will contain all paths to all audio files which were selected from initial dataset.
 
  #### The idea of the noise generation
  ##### At the task was mandatory: 
  - use short time furier transform to add noise
  - same type of noise for all audios
 
- So to solve both subtasks I decided to genarate three random sequences from three different distrinutions: uniform, normal, laplace. Then for each audio signal I used stft window size = 1024 and overlap = 512 and also for each audio signal I generated 3 random sequesnces from distributions with the same parameters and again used stft over that sequesnces afterward I averaged that representation of noises over axis = 1 and with some manipulation combined them together. So at the last step I had the stft representation of the audios and combined averages representation of the noises. To add the noise into the audios I have added combined averages to stft representation of the audios. At the end I have audios with different noises but all noises have the same type and generated from the same distributions.
+ So to solve both subtasks I decided to genarate three random sequences from three different distrinutions: uniform, normal, laplace. Then for each audio signal I used stft window size = 1024 and overlap = 512 and also for each audio signal I generated 3 random sequesnces from distributions with the same parameters and again used stft over that sequesnces afterward I averaged that representation of noises over axis = 1 and with some manipulation combined them together. So at the last step I had the stft representation of the audios and combined averages representation of the noises. To add the noise into the audios I have added combined averages to stft representation of the audios. At the end I have audios with different noises but all noises have the same type because they were generated from the distributions with same parameters.
  
  
  ## Audio Denoising
- I have decided to use convolutional 1d layers. So the input in my NN always should have the same shape. To solve this problem, I decided to take audios and split them with window = 1024, such window size were choosen, because I don't have much computentional power. It is obvious that each audio has different length, so I decided to take length of the audio and devide it over the window size and take intenger part of such devision. 
+ I have decided to use convolutional 1d layers. So the input in my NN always should have the same shape. To solve this problem, I decided to take audios and split them with window = 1024, such window size were choosen, because I don't have much computentional power. It is obvious that each audio has different length, so I decided to take length of the audio and devide it over the window size and take intenger part of such devision and then reshape the the audio with size (audio_length/1024,1024)
 
 The archinecture which I decided to use is convolitional 1d autoencoder with kernel size = 2 and stride = 2 on each layer. 
 #### Architecture:
