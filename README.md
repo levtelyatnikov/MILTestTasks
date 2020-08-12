@@ -21,7 +21,7 @@ In my case the dataset with the audio was pretty large so i decided to take rand
  
  
  ## Audio Denoising
- I have decided to use convolutional 1d layers. So the input in my NN always should have the same shape. To solve this problem, I decided to take audios and split them with window = 1024, such window size were choosen, because I don't have much computentional power. It is obvious that each audio has different length, so I decided to take length of the audio and devide it over the window size and take intenger part of such devision and then reshape the the audio with size (audio_length/1024,1024)
+ I have decided to use convolutional 1d layers. So the input in my NN always should have the same shape. To solve this problem, I decided to take audios and split them with window = 1024, such window size were choosen, because I don't have much computentional power. It is obvious that each audio has different length, so I decided to take length of the audio and divide it over the window size and take intenger part of such division and then reshape the the audio with size (audio_length/1024,1024)
 
 The archinecture which I decided to use is convolitional 1d autoencoder with kernel size = 2 and stride = 2 on each layer. 
 #### Architecture:
